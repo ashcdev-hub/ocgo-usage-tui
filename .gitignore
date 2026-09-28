@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# opencode / bun
+bun.lock
+bun.lockb
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Build output
+dist/
+*.log
