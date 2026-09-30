@@ -1,6 +1,6 @@
 {
   "name": "oc-model-speed",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "TUI sidebar panel showing time to first token and tokens per second for the current session",
   "type": "module",
   "license": "MIT",
