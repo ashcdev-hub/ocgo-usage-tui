@@ -5,7 +5,7 @@ An [opencode](https://opencode.ai) TUI plugin that shows how fast the model is r
 ```
 Model Speed
 TTFT 1.2s
-TPS  25.3 t/s
+TPS  25.3
 ```
 
 ## Requirements

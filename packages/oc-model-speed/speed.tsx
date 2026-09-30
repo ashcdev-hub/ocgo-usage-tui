@@ -24,7 +24,7 @@ function seconds(ms: number): string {
 
 function rate(tps: number): string {
   if (!tps || tps <= 0) return "--"
-  return `${tps.toFixed(1)} t/s`
+  return `${tps.toFixed(1)}`
 }
 
 type Sample = {

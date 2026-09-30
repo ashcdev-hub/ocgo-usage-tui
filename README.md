@@ -20,7 +20,7 @@ Session Context
 
 Model Speed
 TTFT 1.2s
-TPS  25.3 t/s
+TPS  25.3
 ```
 
 ## Requirements
