@@ -28,7 +28,7 @@ function rate(tps: number): string {
 }
 
 type Sample = {
-  ttfp: number
+  ttft: number
   tps: number
   output: number
   model: string
@@ -36,7 +36,8 @@ type Sample = {
 
 // Timing is derived entirely from persisted part/message data:
 //
-//   ttfp = first output part's time.start  -  message.time.created
+//   ttft = first output part's time.start  -  message.time.created
+//          (time to first token)
 //   tps  = tokens.output / (streaming window in seconds)
 //
 // This means it works for turns that already happened as well as the one
@@ -77,16 +78,16 @@ function sampleFor(api: any, message: any): Sample | undefined {
     if (!completed || completed <= created || output <= 0) return undefined
     const fallbackMs = completed - created
     return {
-      ttfp: 0,
+      ttft: 0,
       tps: output / (fallbackMs / 1000),
       output,
       model: message?.modelID ?? message?.info?.modelID ?? "",
     }
   }
 
-  const ttfp = firstStart - created
+  const ttft = firstStart - created
 
-  // Rate over the whole turn, first output to completion. Deliberately NOT
+  // Rate over the whole turn, first token to completion. Deliberately NOT
   // first-part-to-last-part: text part timings start after any reasoning or
   // tool gap, so that window only captures the final sprint and reports a
   // nonsense rate (e.g. 130 t/s where the real figure is ~25 t/s).
@@ -95,7 +96,7 @@ function sampleFor(api: any, message: any): Sample | undefined {
 
   const model = message?.modelID ?? message?.info?.modelID ?? ""
 
-  return { ttfp, tps, output, model }
+  return { ttft, tps, output, model }
 }
 
 const tui: TuiPlugin = async (api) => {
@@ -147,8 +148,8 @@ const tui: TuiPlugin = async (api) => {
               return (
                 <>
                   <text fg={colour()}>
-                    <span fg={dim()}>TTFP </span>
-                    <span fg={colour()}>{s.ttfp > 0 ? seconds(s.ttfp) : "--"}</span>
+                    <span fg={dim()}>TTFT </span>
+                    <span fg={colour()}>{s.ttft > 0 ? seconds(s.ttft) : "--"}</span>
                   </text>
                   <text fg={colour()}>
                     <span fg={dim()}>TPS  </span>

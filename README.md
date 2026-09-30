@@ -6,7 +6,7 @@ A collection of [opencode](https://opencode.ai) TUI sidebar plugins. Each panel 
 | --- | --- | --- |
 | [`ocgo-usage-tui`](packages/ocgo-usage-tui) | OCGO Usage | OpenCode Go rolling (5h), weekly and monthly limits, with time until each resets |
 | [`oc-session-context`](packages/oc-session-context) | Session Context | Context window used this session, the model's limit, and session cost |
-| [`oc-model-speed`](packages/oc-model-speed) | Model Speed | Time to first output (TTFP) and tokens per second for the latest turn |
+| [`oc-model-speed`](packages/oc-model-speed) | Model Speed | Time to first token (TTFT) and tokens per second for the latest turn |
 
 ```
 OCGO Usage
@@ -19,7 +19,7 @@ Session Context
 86,120 of 200,000 / $0.42
 
 Model Speed
-TTFP 1.2s
+TTFT 1.2s
 TPS  25.3 t/s
 ```
 
