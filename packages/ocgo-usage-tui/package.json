@@ -1,0 +1,31 @@
+{
+  "name": "ocgo-usage-tui",
+  "version": "0.1.0",
+  "description": "TUI sidebar panel showing OpenCode Go rolling/weekly/monthly usage limits",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./tui": "./usage.tsx"
+  },
+  "files": [
+    "usage.tsx"
+  ],
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "tui-plugin",
+    "opencode-go",
+    "usage"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashcdev-hub/opencode-sidebars.git",
+    "directory": "packages/ocgo-usage-tui"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": "*",
+    "@opentui/core": "*",
+    "@opentui/solid": "*",
+    "solid-js": "*"
+  }
+}

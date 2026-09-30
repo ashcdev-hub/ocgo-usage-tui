@@ -1,59 +1,77 @@
-# ocgo-usage-tui
+# opencode-sidebars
 
-An [opencode](https://opencode.ai) TUI plugin that shows your [OpenCode Go](https://opencode.ai/go) usage limits in the sidebar: rolling (5 hour), weekly and monthly, with progress bars and the time left until each window resets.
+A collection of [opencode](https://opencode.ai) TUI sidebar plugins. Each panel is a small, standalone plugin published as its own npm package, so you can install only the ones you want.
 
-It uses the OpenCode Go API key you already have connected in opencode, so there is nothing else to set up.
+| Package | Panel | Shows |
+| --- | --- | --- |
+| [`ocgo-usage-tui`](packages/ocgo-usage-tui) | OCGO Usage | OpenCode Go rolling (5h), weekly and monthly limits, with time until each resets |
+| [`oc-session-context`](packages/oc-session-context) | Session Context | Context window used this session, the model's limit, and session cost |
+| [`oc-model-speed`](packages/oc-model-speed) | Model Speed | Time to first output (TTFP) and tokens per second for the latest turn |
 
 ```
 OCGO Usage
 Rolling  █░░░░░░░░░░░░░░░    3%  2h19m
 Weekly   █░░░░░░░░░░░░░░░    3%  6d4h
 Monthly  ███████████░░░░░   69%  5d23h
+
+Session Context
+█████░░░░░░░░░░░░░░░░░░░ 42%
+86,120 of 200,000 / $0.42
+
+Model Speed
+TTFP 1.2s
+TPS  25.3 t/s
 ```
 
 ## Requirements
 
 - opencode 1.18 or newer
-- An [OpenCode Go](https://opencode.ai/go) subscription, connected in opencode with `/connect`
+- For the usage panel, an [OpenCode Go](https://opencode.ai/go) subscription connected in opencode with `/connect`
 
 ## Install
 
-Clone the repo:
+Install any panel with `opencode plugin`, which installs the npm package and adds it to your `tui.json`:
 
 ```bash
-git clone https://github.com/ashcdev-hub/ocgo-usage-tui.git ~/.config/opencode/tui-plugins/ocgo-usage-tui
+opencode plugin ocgo-usage-tui --global
+opencode plugin oc-session-context --global
+opencode plugin oc-model-speed --global
 ```
 
-Then add it to `~/.config/opencode/tui.json`. Create the file if it does not exist:
+Restart opencode; each panel appears in the sidebar.
+
+## Configure
+
+Each panel has a few settings at the top of its source file. See the panel's own README for the options:
+
+- [`ocgo-usage-tui`](packages/ocgo-usage-tui/README.md)
+- [`oc-session-context`](packages/oc-session-context/README.md)
+- [`oc-model-speed`](packages/oc-model-speed/README.md)
+
+## Development
+
+This is a bun workspace; the packages live in `packages/`.
+
+```bash
+bun install
+```
+
+There is no build step: each plugin ships as a single `.tsx` file that opencode loads directly. The workspace `devDependencies` exist only so editors resolve the plugin API types.
+
+To run a panel from a local checkout instead of the published package, point `tui.json` at its folder:
 
 ```json
 {
   "$schema": "https://opencode.ai/tui.json",
-  "plugin": ["/Users/you/.config/opencode/tui-plugins/ocgo-usage-tui"]
+  "plugin": ["/absolute/path/to/opencode-sidebars/packages/ocgo-usage-tui"]
 }
 ```
 
-Use your own absolute path. A `~` is not expanded here.
+`~` is not expanded here, so use an absolute path.
 
-Restart opencode. The panel shows at the bottom of the sidebar.
+## Publishing
 
-## Configure
-
-The settings sit at the top of `usage.tsx`:
-
-| Constant | Default | Meaning |
-| --- | --- | --- |
-| `USAGE_URL` | `https://opencode.ai/zen/go/v1/usage` | Where usage is fetched from |
-| `REFRESH_MS` | `60000` | How often to fetch, in milliseconds |
-| `BAR_WIDTH` | `16` | Progress bar width in cells |
-
-Bar colours track how much of the limit you have used:
-
-| Usage | Colour |
-| --- | --- |
-| 0 to 49% | green |
-| 50 to 89% | amber |
-| 90% and above | red |
+Releases are published to npm by [`.github/workflows/publish.yml`](.github/workflows/publish.yml) when a `v*` tag is pushed. Each package is published only if its version is not already on the registry, so bump the version of the package(s) you changed before tagging.
 
 ## License
 

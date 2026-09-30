@@ -1,0 +1,31 @@
+{
+  "name": "oc-session-context",
+  "version": "0.1.0",
+  "description": "TUI sidebar panel showing session context usage, with a correct context window lookup",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./tui": "./context.tsx"
+  },
+  "files": [
+    "context.tsx"
+  ],
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "tui-plugin",
+    "context",
+    "tokens"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashcdev-hub/opencode-sidebars.git",
+    "directory": "packages/oc-session-context"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": "*",
+    "@opentui/core": "*",
+    "@opentui/solid": "*",
+    "solid-js": "*"
+  }
+}
